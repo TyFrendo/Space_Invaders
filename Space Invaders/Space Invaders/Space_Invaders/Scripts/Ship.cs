@@ -15,21 +15,23 @@ namespace Space_Invaders.Scripts
     class Ship : GameObject
     {
         KeyboardState oldKeyState;
-        Bullet bullet;
+        public Ship_Bullet bullet;
 
         ContentManager content;
 
-        bool fired = false;
+        public bool fired;
 
         public override void LoadContent(ContentManager content)
         {
             this.content = content;
 
             pos_x = 200 * Constants._SIZE;
-            pos_y = 200 * Constants._SIZE;
-            width = 19 * Constants._SIZE;
-            height = 17 * Constants._SIZE;
+            pos_y = 226 * Constants._SIZE;
+            width = 13 * Constants._SIZE;
+            height = 8 * Constants._SIZE;
             tex_name = "Ship";
+
+            fired = false;
 
             oldKeyState = Keyboard.GetState();
 
@@ -47,12 +49,11 @@ namespace Space_Invaders.Scripts
 
             if (!fired && bullet != new Bullet())
             {
-                bullet = new Bullet();
+                bullet = new Ship_Bullet();
                 if (newKeyState.IsKeyDown(Keys.Space))
                 {
 
-                    bullet.pos_x = pos_x + width / 2;
-                    bullet.pos_y += height / 2;
+                    bullet.pos_x = pos_x + (width - Constants._SIZE) / 2;
                     bullet.LoadContent(content);
                     fired = true;
                 }
@@ -60,21 +61,10 @@ namespace Space_Invaders.Scripts
 
             oldKeyState = newKeyState;
 
-            if (fired)
-            {
-                bullet.Update(gameTime);
-                if (bullet.pos_y < -10)
-                    fired = false;
-            }
+            if (bullet.pos_y < -bullet.height)
+                fired = false;
 
             base.Update(gameTime);
-        }
-
-        public override void Draw(SpriteBatch spriteBatch)
-        {
-            if (fired)
-                bullet.Draw(spriteBatch);
-            base.Draw(spriteBatch);
         }
     }
 }

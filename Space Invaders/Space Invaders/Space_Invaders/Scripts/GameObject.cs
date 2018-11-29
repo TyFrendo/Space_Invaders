@@ -13,8 +13,8 @@ namespace Space_Invaders.Scripts
 {
     class GameObject
     {
-        Rectangle hit_box;
-        Texture2D texture;
+        public Rectangle hit_box;
+        public Texture2D texture;
 
         public int pos_x, pos_y, width, height;
         public string tex_name;

@@ -13,19 +13,16 @@ namespace Space_Invaders.Scripts
 {
     class Bullet : GameObject
     {
-        public override void LoadContent(ContentManager content)
-        {
-            pos_y = 200 * Constants._SIZE;
-            width = 1 * Constants._SIZE;
-            height = 3 * Constants._SIZE;
-            tex_name = "Bullet";
-
-            base.LoadContent(content);
-        }
+        public int type;
+        public float dir;
+        public bool des = false;
 
         public override void Update(GameTime gameTime)
         {
-            pos_y -= 3 * Constants._SIZE;
+            pos_y -= (int)(3 * Constants._SIZE * dir);
+
+            if (pos_y < -height || pos_y > Constants._HEGIHT * Constants._SIZE * height)
+                des = true;
 
             base.Update(gameTime);
         }
